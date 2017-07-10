@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+ <link rel="stylesheet" type="text/css" href="interface.css" />
+
+</head>
+<body>
+ <div id="tabs">
+  <button id="resourceTab" type="button" onClick="switchToTab('resourcePage')">Resources</button>
+  <button id="researchTab" type="button" onClick="switchToTab('researchPage')">Research</button>
+ </div>
+ <div id="resourcePage">
+  <div id="resourceColumn" >
+   <div class="resource" id="positivity">
+    Positivity: <span class="number-display">0</span>
+    <div class="resource-dropdown">
+     production: <span id="positivityVelocity">0</span>
+    </div>
+   </div>
+
+   <br>
+
+   <div class="resource" id="positivityGenerator">
+    Positivity Generators:<span  class="number-display">0</span>
+   </div>
+  </div>
+
+  <div id="activeColumn">
+   <button type="button" onClick="genPos(1)">
+    Generate Positivity
+   </button>
+  </div>
+  <div id="passiveColumn">
+   <button id="buyPositivityGenerator" type="button" onClick="buyPosGen(1)">
+    Build Positivity Generator: <span class="number-display">10</span>
+   </button>
+  </div>
+ </div>
+ <div id="researchPage">
+ TEST
+ </div>
+
+
+<script type="text/javascript" src="main.js"></script>
+
+</body>
+</html>

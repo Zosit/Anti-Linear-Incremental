@@ -1,0 +1,73 @@
+#tabs {
+	width:90.4%;
+	height:50px;
+	border-style:solid;
+	border-width:1px;
+}
+
+#resourcePage {
+	width:100%;
+}
+
+#resourceColumn {
+	border-style:solid;
+	border-width:1px;
+	height:100px;
+	width:30%;
+	float:left;
+}
+
+#activeColumn {
+	border-style:solid;
+	border-width:1px;
+	height:100px;
+	width:30%;
+	float:left;
+}
+
+#passiveColumn {
+	border-style:solid;
+	border-width:1px;
+	height:100px;
+	width:30%;
+	float:left;
+}
+
+
+#researchPage {
+	width:100%;
+	display:none;
+}
+
+
+.number-display {
+	float:right;
+}
+
+.resource {
+
+}
+
+
+.resource-dropdown {
+	display:none;
+	position:absolute;
+	background-color:lightgrey;
+}
+
+.resource:hover .resource-dropdown {
+	display:block;
+}
+
+
+#positivity {
+	display:none;
+}
+
+#positivityGenerator {
+	display:none;
+}
+
+#buyPositivityGenerator {
+
+}
