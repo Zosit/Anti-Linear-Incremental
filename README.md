@@ -17,4 +17,8 @@ JS has generic functions for updating resource values and writing to the locatio
 JS also has functions for handling updates to resource values and calculating their velocitys, and a global clock for updating these values.
 Future updates will hopefully improve in speed as more generic functions are added.
 
-Next goal is to add sliders to the html, and cycling numbers behaviour to the JS.
+The main issues met so far have been making sure that numbers are properly aligned to the corresponding words in the HTML while
+still hiding information from the user about buttons and resources that cannot be used, and grouping variables in html
+into classes and objcts to minimize repeated lines of code.
+
+The next goal is to add sliders to the html, and cycling numbers behaviour to the JS.
