@@ -1,3 +1,7 @@
+/*
+ *	This file is available under the GNU license. See the LICENSE file in the root directory for details.
+ */
+
 #tabs {
 	width:90.4%;
 	height:50px;
@@ -67,6 +71,35 @@
 #positivityGenerator {
 	display:none;
 }
+
+#negativity {
+	display:none;
+}
+
+#pressure {
+	display:none;
+}
+
+#decNeg {
+	display:none;
+}
+
+#incNeg {
+	display:none;
+}
+
+#decPre {
+	display:none;
+}
+
+#incPre {
+	display:none;
+}
+
+#flipPre {
+	display:none;
+}
+
 
 #buyPositivityGenerator {
 
