@@ -26,13 +26,13 @@ var pressure = new resource(0);
 var pressureCap = new resource(10);
 var pressureGen = new resource(0);
 var pressureVelocity = new resource(0);
-var pressureDirection = new resource(1);
+var pressureDirection = new resource(0);
 
 //todo
-var dynamoUnlocked = 1;
+var dynamoUnlocked = 0;
 var electricity = new resource(0);
-var electricityRatioIdle = new resource(100);
-var electricityRatioPosGen = new resource(0);
+var electricityRatioIdle = new resource(50);
+var electricityRatioPosGen = new resource(50);
 
 //Generic Resource Management Functions
 function ResourceTestForReveal(targetId, targetValue) {
@@ -57,6 +57,14 @@ function ResourceScreenUpdate (targetValue, targetId) {
 	element.childNodes[1].innerHTML = targetValue.value;
 }
 
+function ResourceDropdownUpdate (targetValue, targetId) {
+	var element = document.getElementById(targetId);
+
+	ResourceTestForReveal(targetId, targetValue);
+
+	element.childNodes[3].childNodes[1].innerHTML = targetValue.value;
+}
+
 function ResourceCapScreenUpdate (targetValue, targetId) {
 	var element = document.getElementById(targetId);
 
@@ -68,31 +76,75 @@ window.setInterval(function(){
 
 	updateVelocity();
 
-	var posChange = genPos(positivityVelocity.value);
+	genPos(positivityVelocity.value);
 
-	genPre(pressureVelocity.value, posChange);
+	genPre(pressureVelocity.value);
 }, 1000);
 
 //MetaResource Updates
 function updateVelocity(){
-	pressureVelocity.value = pressureGen.value * pressureDirection.value;
-	//case where pressure will empty early
-	if(-pressureVelocity.value > pressure.value) {
+
+	//calculate expected pressure change
+	//calculate missing positivity needed
+	//reduce by missing
+
+	//base positivity value
+	positivityVelocity.value = positivityGen.value;
+
+	//reduce positivity by negativity %
+	positivityVelocity.value -= (negativity.value / 100.0) * positivityCap.value;
+
+	//Check positivity caps and limit velocity
+	if(-positivityVelocity.value > positivity.value) {
+		positivityVelocity.value = -positivity.value;
+	}
+	if(positivityVelocity.value + positivity.value > positivityCap.value) {
+		positivityVelocity.value = positivityCap.value - positivity.value;
+	}
+
+	//base pressure value
+	pressureVelocity.value = (pressureGen.value / 100) * pressureCap.value * pressureDirection.value;
+
+	//Check pressure caps and limit velocity
+	if(pressureVelocity.value + pressure.value < 0) {
 		pressureVelocity.value = -pressure.value;
 	}
-	//case where pressure will fill early
 	if(pressureVelocity.value + pressure.value > pressureCap.value) {
 		pressureVelocity.value = pressureCap.value - pressure.value;
 	}
 
-	//base value
-	positivityVelocity.value = positivityGen.value;
-	//cut out negativity %
-	positivityVelocity.value -= (negativity.value / 100.0) * positivityCap.value;
-	//remove pressure
-	positivityVelocity.value -= (pressureVelocity.value / 100.0) * pressureCap.value;
+	//case where there is not enough positivity for pressure change
+	if(pressureVelocity.value > positivity.value + positivityVelocity.value && pressureDirection.value == 1) {
+		pressureVelocity.value = positivity.value  + positivityVelocity.value;
+	}
 
-	//todo: gen electricity and redo velocitys
+	//pressure affects positivity
+	positivityVelocity.value -= pressureVelocity.value;
+
+	//lastly pull from negativity if needed
+	if(positivityVelocity.value == -positivity.value && pressureDirection.value == 1) {
+		pressureVelocity.value += (negativity.value / 100) * pressureCap.value;
+	}
+
+	//gen electricity 
+	genEle();
+
+	electricity.value = Math.round(electricity.value * 10) / 10;
+
+
+	//redo positive velocity
+	positivityVelocity.value += electricity.value * (electricityRatioPosGen.value / 100)
+
+	//Check positivity caps and limit velocity
+	if(-positivityVelocity.value > positivity.value) {
+		positivityVelocity.value = -positivity.value;
+	}
+	if(positivityVelocity.value + positivity.value > positivityCap.value) {
+		positivityVelocity.value = positivityCap.value - positivity.value;
+	}
+
+	ResourceDropdownUpdate(positivityVelocity, "positivity");
+	ResourceDropdownUpdate(pressureVelocity, "pressure");
 }
 
 //MetaResource Updates
@@ -119,7 +171,6 @@ function genPos(num) {
 	}
 	ResourceScreenUpdate(positivity, "positivity");
 	ResourceCapScreenUpdate(positivityCap, "positivity");
-	return positivity.value - oldVal;
 }
 
 function genPosGen(num) {
@@ -148,23 +199,12 @@ function genNeg(num) {
 	}
 }
 
-function genPre(num, posChange) {
+function genPre(num) {
 
 	//not enough positivity
 	if(pressureUnlocked == 1) {
-		if(positivity.value == 0 && pressureDirection.value == 1) {
-			pressure.value -= posChange;
-			pressure.value += positivityGen.value;
-
-			//negativity hacks
-			pressure.value += (negativity.value / 100) * pressureCap.value;
-	
-		} else if(positivity.value == 0 && pressureDirection.value == -1) {
-			pressure.value += (num / 100) * pressureCap.value;
-		} else {
-			pressure.value += (num / 100) * pressureCap.value;
-		}
-	
+		pressure.value += num;
+		
 		if(pressure.value <= 0) {
 			pressure.value = 0;
 			pressureDirection.value = 1;
@@ -190,6 +230,11 @@ function genPreGen(num) {
 	}
 }
 
+function genEle() {
+	electricity.value = Math.abs(positivityVelocity.value) + Math.abs(pressureVelocity.value);
+	ResourceScreenUpdate (electricity, "electricity");
+}
+
 //Resource Purchase
 function buyPosGen(num) {
 	if(positivity.value >= positivityGenCost.value) {
@@ -201,7 +246,7 @@ function buyPosGen(num) {
 
 //Cost Calculations
 function posGenCostUpdate(num) {
-	positivityGenCost.value = (positivityGen.value + 1) * 10;
+	positivityGenCost.value = (positivityGen.value + 1) * 5;
 }
 
 //Tabs
@@ -236,7 +281,7 @@ function boostCaps() {
 }
 
 function researchNegativity() {
-	if(positivity.value >= 10) {
+	//if(positivity.value >= 10) {
 		ClearAllResources();
 		boostCaps();
 		negativityCap.value = 1;
@@ -245,20 +290,21 @@ function researchNegativity() {
 		revealHTML("decNeg");
 		revealHTML("incNeg");
 		hideHTML("resNeg");
-	}
+	//}
 }
 
 function researchPressure() {
-	if(positivity.value >= 100 && negativity.value >= 1) {
+	//if(positivity.value >= 100 && negativity.value >= 1) {
 		ClearAllResources();
 		boostCaps();
 		negativityCap.value = 5;
 
 		pressureUnlocked = 1;
+		pressureDirection.value = 1;
 		revealHTML("decPre");
 		revealHTML("incPre");
 		hideHTML("resPre");
-	}
+	//}
 }
 
 function researchDynamo() {
