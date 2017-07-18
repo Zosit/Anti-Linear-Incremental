@@ -16,7 +16,24 @@
    <div class="resource" id="positivity">
     Positivity: <span class="number-display">0</span>
     <div class="resource-dropdown">
-     production: <span id="positivityVelocity">0</span>
+     <div id="basePositivityVelocity">
+      Gen: <span class="number-display">0</span><br>
+     </div>
+     <div id="negativePositivityVelocity">
+      Negativity: <span class="number-display">0</span><br>
+     </div>
+     <div id="positivityVelocityLimit">
+      Base Sum: <span class="number-display">0</span><br>
+     </div>
+     <div id="pressurePositivityVelocity">
+      Pressure: <span class="number-display">0</span><br>
+     </div>
+     <div id="electricityPositivityVelocity">
+      Electricity: <span class="number-display">0</span><br>
+     </div>
+     <div id="positivityVelocityLimit2">
+      Post Sum: <span class="number-display">0</span>
+     </div>
     </div>
     <br>
    </div>
@@ -79,7 +96,7 @@
   <button id="resNeg" type="button" onClick="researchNegativity()">
    Unlock Negativity: 10 pos
   </button>
-  <button id="resNeg" type="button" onClick="researchPressure()">
+  <button id="resPre" type="button" onClick="researchPressure()">
    Unlock Pressure: 100 pos, 5% Neg
   </button>
  </div>

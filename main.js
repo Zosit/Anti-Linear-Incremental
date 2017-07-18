@@ -49,6 +49,32 @@ function ResourceTestForReveal(targetId, targetValue) {
 	}	
 }
 
+function VelocityReveal(targetId) {
+	var element = document.getElementById(targetId);
+
+	if(element.currentStyle) {
+		var style = element.currentStyle.display;
+	} else if (window.getComputedStyle) {
+		var style = window.getComputedStyle(element, null).getPropertyValue("display");
+	}
+	if(style == "none") {
+		element.style.display = "inline";
+	}	
+}
+
+function VelocityHide(targetId) {
+	var element = document.getElementById(targetId);
+
+	if(element.currentStyle) {
+		var style = element.currentStyle.display;
+	} else if (window.getComputedStyle) {
+		var style = window.getComputedStyle(element, null).getPropertyValue("display");
+	}
+	if(style != "none") {
+		element.style.display = "none";
+	}	
+}
+
 function ResourceScreenUpdate (targetValue, targetId) {
 	var element = document.getElementById(targetId);
 
@@ -64,6 +90,48 @@ function ResourceDropdownUpdate (targetValue, targetId) {
 
 	element.childNodes[3].childNodes[1].innerHTML = targetValue.value;
 }
+
+function ResourceDropdownPositivityUpdate (base, negative, limit1, pressure, electricity, limit2, targetId) {
+	var element = document.getElementById(targetId);
+
+	if(base != 0) {
+		VelocityReveal("basePositivityVelocity");
+		element.childNodes[3].childNodes[1].childNodes[1].innerHTML = base;
+	} else {
+		VelocityHide("basePositivityVelocity");
+	}
+	if(negative != 0) {
+		VelocityReveal("negativePositivityVelocity");
+		element.childNodes[3].childNodes[3].childNodes[1].innerHTML = negative;
+	} else {
+		VelocityHide("negativePositivityVelocity");
+	}
+	if((base != 0) || (negative != 0)) {
+		VelocityReveal("positivityVelocityLimit");
+		element.childNodes[3].childNodes[5].childNodes[1].innerHTML = limit1;
+	} else {
+		VelocityHide("positivityVelocityLimit");
+	}
+	if(pressure != 0) {
+		VelocityReveal("pressurePositivityVelocity");
+		element.childNodes[3].childNodes[7].childNodes[1].innerHTML = pressure;
+	} else {
+		VelocityHide("pressurePositivityVelocity");
+	}
+	if(electricity != 0) {
+		VelocityReveal("electricityPositivityVelocity");
+		element.childNodes[3].childNodes[9].childNodes[1].innerHTML = electricity;
+	} else {
+		VelocityHide("electricityPositivityVelocity");
+	}
+	if((pressure != 0) || (electricity != 0)) {
+		VelocityReveal("positivityVelocityLimit2");
+		element.childNodes[3].childNodes[11].childNodes[1].innerHTML = limit2;
+	} else {
+		VelocityHide("positivityVelocityLimit2");
+	}
+}
+
 
 function ResourceCapScreenUpdate (targetValue, targetId) {
 	var element = document.getElementById(targetId);
@@ -84,42 +152,51 @@ window.setInterval(function(){
 //MetaResource Updates
 function updateVelocity(){
 
+
+
 	//calculate expected pressure change
 	//calculate missing positivity needed
 	//reduce by missing
 
 	//base positivity value
-	positivityVelocity.value = positivityGen.value;
+	var basePositivityVelocity = positivityGen.value;
 
 	//reduce positivity by negativity %
-	positivityVelocity.value -= (negativity.value / 100.0) * positivityCap.value;
+	var negativePositivityVelocity = -(negativity.value / 100.0) * positivityCap.value;
 
 	//Check positivity caps and limit velocity
-	if(-positivityVelocity.value > positivity.value) {
-		positivityVelocity.value = -positivity.value;
+	positivityVelocity.value = basePositivityVelocity + negativePositivityVelocity;
+	var positivityVelocityLimit = positivityVelocity.value;
+	if(-positivityVelocityLimit > positivity.value) {
+		positivityVelocityLimit = -positivity.value;
 	}
-	if(positivityVelocity.value + positivity.value > positivityCap.value) {
-		positivityVelocity.value = positivityCap.value - positivity.value;
+	if(positivityVelocityLimit + positivity.value > positivityCap.value) {
+		positivityVelocityLimit = positivityCap.value - positivity.value;
 	}
+	positivityVelocity.value = positivityVelocityLimit;
+
 
 	//base pressure value
-	pressureVelocity.value = (pressureGen.value / 100) * pressureCap.value * pressureDirection.value;
+	var basePressureVelocity = (pressureGen.value / 100) * pressureCap.value * pressureDirection.value;
 
 	//Check pressure caps and limit velocity
-	if(pressureVelocity.value + pressure.value < 0) {
-		pressureVelocity.value = -pressure.value;
+	pressureVelocity.value = basePressureVelocity;
+	var pressureVelocityLimit = pressureVelocity.value;
+	if(pressureVelocityLimit + pressure.value < 0) {
+		pressureVelocityLimit = -pressure.value;
 	}
-	if(pressureVelocity.value + pressure.value > pressureCap.value) {
-		pressureVelocity.value = pressureCap.value - pressure.value;
+	if(pressureVelocityLimit + pressure.value > pressureCap.value) {
+		pressureVelocityLimit = pressureCap.value - pressure.value;
 	}
-
 	//case where there is not enough positivity for pressure change
-	if(pressureVelocity.value > positivity.value + positivityVelocity.value && pressureDirection.value == 1) {
-		pressureVelocity.value = positivity.value  + positivityVelocity.value;
+	if(pressureVelocityLimit > positivity.value + positivityVelocity.value && pressureDirection.value == 1) {
+		pressureVelocityLimit = positivity.value  + positivityVelocity.value;
 	}
+	pressureVelocity.value = pressureVelocityLimit;
 
 	//pressure affects positivity
-	positivityVelocity.value -= pressureVelocity.value;
+	var pressurePositivityVelocity = -pressureVelocity.value;
+	positivityVelocity.value += pressurePositivityVelocity;
 
 	//lastly pull from negativity if needed
 	if(positivityVelocity.value == -positivity.value && pressureDirection.value == 1) {
@@ -133,17 +210,20 @@ function updateVelocity(){
 
 
 	//redo positive velocity
-	positivityVelocity.value += electricity.value * (electricityRatioPosGen.value / 100)
+	var electricityPositivityVelocity = electricity.value * (electricityRatioPosGen.value / 100)
+	positivityVelocity.value += electricityPositivityVelocity;
 
 	//Check positivity caps and limit velocity
-	if(-positivityVelocity.value > positivity.value) {
-		positivityVelocity.value = -positivity.value;
+	var positivityVelocityLimit2 = positivityVelocity.value;
+	if(-positivityVelocityLimit2 > positivity.value) {
+		positivityVelocityLimit2 = -positivity.value;
 	}
 	if(positivityVelocity.value + positivity.value > positivityCap.value) {
-		positivityVelocity.value = positivityCap.value - positivity.value;
+		positivityVelocityLimit2 = positivityCap.value - positivity.value;
 	}
+	positivityVelocity.value = positivityVelocityLimit2;
 
-	ResourceDropdownUpdate(positivityVelocity, "positivity");
+	ResourceDropdownPositivityUpdate(basePositivityVelocity, negativePositivityVelocity, positivityVelocityLimit, pressurePositivityVelocity, electricityPositivityVelocity, positivityVelocityLimit2, "positivity");
 	ResourceDropdownUpdate(pressureVelocity, "pressure");
 }
 
@@ -225,9 +305,9 @@ function genPreGen(num) {
 		pressureGen.value = 0;
 	}
 
-	if(pressureGen.value >= pressureGenCap.value) {
+	/*if(pressureGen.value >= pressureGenCap.value) {
 		pressureGen.value = pressureGenCap.value;
-	}
+	}*/
 }
 
 function genEle() {
