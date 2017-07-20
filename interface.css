@@ -52,6 +52,10 @@
 
 }
 
+.purchase {
+
+}
+
 
 .resource-dropdown {
 	display:none;
@@ -60,6 +64,10 @@
 }
 
 .resource:hover .resource-dropdown {
+	display:block;
+}
+
+.purchase:hover .resource-dropdown {
 	display:block;
 }
 

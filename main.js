@@ -132,6 +132,57 @@ function ResourceDropdownPositivityUpdate (base, negative, limit1, pressure, ele
 	}
 }
 
+function ResourceDropdownPressureUpdate (basePercent, actual, preLimit, negBoost, targetId) {
+	var element = document.getElementById(targetId);
+
+	if(basePercent != 0) {
+		VelocityReveal("basePressureVelocityPercent");
+		element.childNodes[3].childNodes[1].childNodes[1].innerHTML = basePercent;
+	} else {
+		VelocityHide("basePressureVelocityPercent");
+	}
+	if(actual != 0) {
+		VelocityReveal("basePressureVelocity");
+		element.childNodes[3].childNodes[3].childNodes[1].innerHTML = actual;
+	} else {
+		VelocityHide("basePressureVelocity");
+	}
+	if((basePercent != 0) || (actual != 0)) {
+		VelocityReveal("pressureVelocityLimit");
+		element.childNodes[3].childNodes[5].childNodes[1].innerHTML = preLimit;
+	} else {
+		VelocityHide("pressureVelocityLimit");
+	}
+	if((negBoost != 0)) {
+		VelocityReveal("negativePressureVelocity");
+		element.childNodes[3].childNodes[7].childNodes[1].innerHTML = negBoost;
+	} else {
+		VelocityHide("negativePressureVelocity");
+	}
+}
+
+function ResourceDropdownElectricityUpdate (positivity, pressure, eleLimit, targetId) {
+	var element = document.getElementById(targetId);
+
+	if(positivity != 0) {
+		VelocityReveal("elePositivityVelocity");
+		element.childNodes[3].childNodes[1].childNodes[1].innerHTML = positivity;
+	} else {
+		VelocityHide("elePositivityVelocity");
+	}
+	if(pressure != 0) {
+		VelocityReveal("elePressureVelocity");
+		element.childNodes[3].childNodes[3].childNodes[1].innerHTML = pressure;
+	} else {
+		VelocityHide("elePressureVelocity");
+	}
+	if((positivity != 0) || (pressure != 0)) {
+		VelocityReveal("eleLimit");
+		element.childNodes[3].childNodes[5].childNodes[1].innerHTML = eleLimit;
+	} else {
+		VelocityHide("eleLimit");
+	}
+}
 
 function ResourceCapScreenUpdate (targetValue, targetId) {
 	var element = document.getElementById(targetId);
@@ -199,15 +250,27 @@ function updateVelocity(){
 	positivityVelocity.value += pressurePositivityVelocity;
 
 	//lastly pull from negativity if needed
+	var roundedPressureVelocity = 0;
 	if(positivityVelocity.value == -positivity.value && pressureDirection.value == 1) {
-		pressureVelocity.value += (negativity.value / 100) * pressureCap.value;
+		negativePressureVelocity = (negativity.value / 100) * pressureCap.value;
+	} else {
+		negativePressureVelocity = 0;
 	}
 
+	pressureVelocity.value += negativePressureVelocity;
+
 	//gen electricity 
-	genEle();
-
-	electricity.value = Math.round(electricity.value * 10) / 10;
-
+	var roundedPositivityVelocity = 0;
+	var roundedPressureVelocity = 0;
+	if(dynamoUnlocked == 1) {
+		roundedPositivityVelocity = Math.abs(Math.round(positivityVelocity.value * 10) / 10);
+		roundedPressureVelocity = Math.abs(Math.round(pressureVelocity.value * 10) / 10);
+		electricity.value = roundedPositivityVelocity + roundedPressureVelocity;
+		electricity.value = Math.round(electricity.value * 10) / 10;
+	} else {
+		electricity.value = 0;
+	}
+	ResourceScreenUpdate (electricity, "electricity");
 
 	//redo positive velocity
 	var electricityPositivityVelocity = electricity.value * (electricityRatioPosGen.value / 100)
@@ -224,7 +287,8 @@ function updateVelocity(){
 	positivityVelocity.value = positivityVelocityLimit2;
 
 	ResourceDropdownPositivityUpdate(basePositivityVelocity, negativePositivityVelocity, positivityVelocityLimit, pressurePositivityVelocity, electricityPositivityVelocity, positivityVelocityLimit2, "positivity");
-	ResourceDropdownUpdate(pressureVelocity, "pressure");
+	ResourceDropdownPressureUpdate (pressureGen.value, basePressureVelocity, pressureVelocityLimit, negativePressureVelocity, "pressure");
+	ResourceDropdownElectricityUpdate(roundedPositivityVelocity, roundedPressureVelocity, electricity.value, "electricity");
 }
 
 //MetaResource Updates
@@ -235,9 +299,11 @@ function FlipPreDir(){
 
 //Resource Generation
 function ClearAllResources() {
-	genPos(-positivity.value)
-	genPosGen(-positivityGen.value)
+	genPos(-positivity.value);
+	genPosGen(-positivityGen.value);
 	negativity.value = 0;
+	genPre(-pressure.value);
+	genPreGen(-pressureGen.value);
 }
 
 function genPos(num) {
@@ -310,11 +376,6 @@ function genPreGen(num) {
 	}*/
 }
 
-function genEle() {
-	electricity.value = Math.abs(positivityVelocity.value) + Math.abs(pressureVelocity.value);
-	ResourceScreenUpdate (electricity, "electricity");
-}
-
 //Resource Purchase
 function buyPosGen(num) {
 	if(positivity.value >= positivityGenCost.value) {
@@ -326,7 +387,7 @@ function buyPosGen(num) {
 
 //Cost Calculations
 function posGenCostUpdate(num) {
-	positivityGenCost.value = (positivityGen.value + 1) * 5;
+	positivityGenCost.value = Math.round(2 * Math.pow(1.05, positivityGen.value));
 }
 
 //Tabs
@@ -360,8 +421,9 @@ function boostCaps() {
 		pressureCap.value *= 10;
 }
 
+//research functions
 function researchNegativity() {
-	//if(positivity.value >= 10) {
+	if(positivity.value >= 10) {
 		ClearAllResources();
 		boostCaps();
 		negativityCap.value = 1;
@@ -370,11 +432,11 @@ function researchNegativity() {
 		revealHTML("decNeg");
 		revealHTML("incNeg");
 		hideHTML("resNeg");
-	//}
+	}
 }
 
 function researchPressure() {
-	//if(positivity.value >= 100 && negativity.value >= 1) {
+	if(positivity.value >= 100 && negativity.value >= 1) {
 		ClearAllResources();
 		boostCaps();
 		negativityCap.value = 5;
@@ -384,15 +446,25 @@ function researchPressure() {
 		revealHTML("decPre");
 		revealHTML("incPre");
 		hideHTML("resPre");
-	//}
+	}
 }
 
 function researchDynamo() {
-	if(positivity.value >= 1000 && negativity.value >= 5) {
+	if(positivity.value >= 1000 && pressure.value >= 1000 && negativity.value >= 5) {
 		ClearAllResources();
+		boostCaps();
 		negativityCap.value = 10;
 
 		dynamoUnlocked = 1;
 	}
 }
 
+function researchMarket() {
+	if(positivity.value >= 10000 && pressure.value >= 10000 && negativity.value >= 10) {
+		ClearAllResources();
+		boostCaps();
+		negativityCap.value = 15;
+
+		marketUnlocked = 1;
+	}
+}

@@ -54,13 +54,35 @@
    <div class="resource" id="pressure">
     Pressure:<span  class="number-display">0</span>
     <div class="resource-dropdown">
-     production: <span id="pressureVelocity">0</span>
+     <div id="basePressureVelocityPercent">
+      Percentage: <span class="number-display">0</span><br>
+     </div>
+     <div id="basePressureVelocity">
+      Actual: <span class="number-display">0</span><br>
+     </div>
+     <div id="pressureVelocityLimit">
+      Base Sum: <span class="number-display">0</span><br>
+     </div>
+     <div id="negativePressureVelocity">
+      Negativity: <span class="number-display">0</span><br>
+     </div>
     </div>
     <br>
    </div>
 
    <div class="resource" id="electricity">
     electricity:<span  class="number-display">0</span>
+    <div class="resource-dropdown">
+     <div id="elePositivityVelocity">
+      Positivity: <span class="number-display">0</span><br>
+     </div>
+     <div id="elePressureVelocity">
+      Pressure: <span class="number-display">0</span><br>
+     </div>
+     <div id="eleLimit">
+      Base Sum: <span class="number-display">0</span><br>
+     </div>
+    </div>
     <br>
    </div>
   </div>
@@ -87,9 +109,16 @@
    </button>
   </div>
   <div id="passiveColumn">
-   <button id="buyPositivityGenerator" type="button" onClick="buyPosGen(1)">
+   <button class="purchase" id="buyPositivityGenerator" type="button" onClick="buyPosGen(1)">
     Build Positivity Generator: <span class="number-display">10</span>
+    <div class="resource-dropdown">
+     <div id="PosGenBuyInfo">
+      Base Cost: <span class="number-display">2</span><br>
+      Price Ratio: <span class="number-display">1.05</span><br>
+     </div>
+    </div>
    </button>
+
   </div>
  </div>
  <div id="researchPage">
@@ -97,7 +126,10 @@
    Unlock Negativity: 10 pos
   </button>
   <button id="resPre" type="button" onClick="researchPressure()">
-   Unlock Pressure: 100 pos, 5% Neg
+   Unlock Pressure: 100 pos, 1% Neg
+  </button>
+  <button id="resPre" type="button" onClick="researchDynamo()">
+   Unlock Pressure: 1000 pos, 1000 pre, 5% Neg
   </button>
  </div>
 
