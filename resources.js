@@ -34,4 +34,5 @@ var electricityVelocity = new resource(0);
 var electricityRatioIdle = new resource(40);
 var electricityRatioPosGen = new resource(50);
 var electricityRatioBattery = new resource(10);
+var electricityRatioCap = new resource(100);
 var electricityCap = new resource(0);

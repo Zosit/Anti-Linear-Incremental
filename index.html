@@ -85,6 +85,19 @@
     </div>
     <br>
    </div>
+
+   <div class="resource" id="electricityIdle">
+    IdleRatio:<span  class="number-display">0</span>
+    <br>
+   </div>
+   <div class="resource" id="electricityBattery">
+    BatteryRatio:<span  class="number-display">0</span>
+    <br>
+   </div>
+   <div class="resource" id="electricityPosGen">
+    PositiveRatio:<span  class="number-display">0</span>
+    <br>
+   </div>
   </div>
 
   <div id="activeColumn">
@@ -104,8 +117,18 @@
    <button id="incPre" type="button" onClick="genPreGen(1)">
     Inc. Pressure Rate
    </button>
-   <button id="flipPre" type="button" onClick="FlipPreDir()">
-    Flip Pressure Direction
+   <br>
+   <button id="decBat" type="button" onClick="genEleBat(-10)">
+    Dec. Battery
+   </button>
+   <button id="incBat" type="button" onClick="genEleBat(10)">
+    Inc. Battery
+   </button>
+   <button id="decElePos" type="button" onClick="genElePos(-10)">
+    Dec. Dynamo
+   </button>
+   <button id="incElePos" type="button" onClick="genElePos(10)">
+    Inc. Dynamo
    </button>
   </div>
   <div id="passiveColumn">
@@ -128,7 +151,7 @@
   <button id="resPre" type="button" onClick="researchPressure()">
    Unlock Pressure: 100 pos, 1% Neg
   </button>
-  <button id="resPre" type="button" onClick="researchDynamo()">
+  <button id="resEle" type="button" onClick="researchDynamo()">
    Unlock Electricity: 1000 pos, 1000 pre, 5% Neg
   </button>
  </div>

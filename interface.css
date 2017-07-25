@@ -16,7 +16,7 @@
 #resourceColumn {
 	border-style:solid;
 	border-width:1px;
-	height:100px;
+	height:200px;
 	width:30%;
 	float:left;
 }
@@ -24,7 +24,7 @@
 #activeColumn {
 	border-style:solid;
 	border-width:1px;
-	height:100px;
+	height:200px;
 	width:30%;
 	float:left;
 }
@@ -32,7 +32,7 @@
 #passiveColumn {
 	border-style:solid;
 	border-width:1px;
-	height:100px;
+	height:200px;
 	width:30%;
 	float:left;
 }
@@ -92,6 +92,18 @@
 	display:none;
 }
 
+#electricityIdle {
+	display:none;
+}
+
+#electricityBattery {
+	display:none;
+}
+
+#electricityPosGen {
+	display:none;
+}
+
 #decNeg {
 	display:none;
 }
@@ -108,7 +120,19 @@
 	display:none;
 }
 
-#flipPre {
+#decBat {
+	display:none;
+}
+
+#incBat {
+	display:none;
+}
+
+#decElePos {
+	display:none;
+}
+
+#incElePos {
 	display:none;
 }
 

@@ -45,6 +45,11 @@ function researchDynamo() {
 		negativityCap.value = 10;
 
 		dynamoUnlocked = 1;
+		revealHTML("decBat");
+		revealHTML("incBat");
+		revealHTML("decElePos");
+		revealHTML("incElePos");
+		hideHTML("resEle");
 	//}
 }
 

@@ -75,6 +75,19 @@ function genPre(num) {
 	}
 }
 
+
+function genPreGen(num) {
+	pressureGen.value += num;
+	if(pressureGen.value <= 0) {
+		pressureGen.value = 0;
+	}
+
+	/*if(pressureGen.value >= pressureGenCap.value) {
+		pressureGen.value = pressureGenCap.value;
+	}*/
+}
+
+
 function genEle(num) {
 
 	//not enough positivity
@@ -87,14 +100,68 @@ function genEle(num) {
 	}
 }
 
+function genEleBat(num) {
+	var change = 0;
 
-function genPreGen(num) {
-	pressureGen.value += num;
-	if(pressureGen.value <= 0) {
-		pressureGen.value = 0;
+	//not enough positivity
+	if(dynamoUnlocked == 1) {
+		//check against max/min values
+		if((electricityRatioBattery.value + num) > electricityRatioCap.value) {
+			change = electricityRatioCap.value - electricityRatioBattery.value;
+		} else if((electricityRatioBattery.value + num) < 0) {
+			change = -electricityRatioBattery.value;
+		} else {
+			change = num;
+		}
+
+		//check against available idle electricity
+		if(-change + electricityRatioIdle.value > electricityRatioCap.value) {
+			change = electricityRatioCap.value - electricityRatioIdle.value;
+		}
+		if(-change + electricityRatioIdle.value < 0) {
+			change = -electricityRatioIdle.value;
+		}
+
+		
+		electricityRatioBattery.value += change;
+		electricityRatioIdle.value -= change;
+
+		ResourceScreenUpdate(electricityRatioIdle, "electricityIdle");
+		ResourceCapScreenUpdate(electricityRatioCap, "electricityIdle");
+		ResourceScreenUpdate(electricityRatioBattery, "electricityBattery");
+		ResourceCapScreenUpdate(electricityRatioCap, "electricityBattery");
 	}
+}
 
-	/*if(pressureGen.value >= pressureGenCap.value) {
-		pressureGen.value = pressureGenCap.value;
-	}*/
+function genElePos(num) {
+	var change = 0;
+
+	//not enough positivity
+	if(dynamoUnlocked == 1) {
+		//check against max/min values
+		if((electricityRatioPosGen.value + num) > electricityRatioCap.value) {
+			change = electricityRatioCap.value - electricityRatioPosGen.value;
+		} else if((electricityRatioPosGen.value + num) < 0) {
+			change = -electricityRatioPosGen.value;
+		} else {
+			change = num;
+		}
+
+		//check against available idle electricity
+		if(-change + electricityRatioIdle.value > electricityRatioCap.value) {
+			change = electricityRatioCap.value - electricityRatioIdle.value;
+		}
+		if(-change + electricityRatioIdle.value < 0) {
+			change = -electricityRatioIdle.value;
+		}
+
+		
+		electricityRatioPosGen.value += change;
+		electricityRatioIdle.value -= change;
+
+		ResourceScreenUpdate(electricityRatioIdle, "electricityIdle");
+		ResourceCapScreenUpdate(electricityRatioCap, "electricityIdle");
+		ResourceScreenUpdate(electricityRatioPosGen, "electricityPosGen");
+		ResourceCapScreenUpdate(electricityRatioCap, "electricityPosGen");
+	}
 }
