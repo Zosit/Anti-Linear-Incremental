@@ -104,6 +104,11 @@
 	display:none;
 }
 
+#electricityMult {
+	display:none;
+}
+
+
 #decNeg {
 	display:none;
 }
@@ -125,6 +130,14 @@
 }
 
 #incBat {
+	display:none;
+}
+
+#decMult {
+	display:none;
+}
+
+#incMult {
 	display:none;
 }
 

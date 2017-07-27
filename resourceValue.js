@@ -106,17 +106,18 @@ function genEleBat(num) {
 	//not enough positivity
 	if(dynamoUnlocked == 1) {
 		//check against max/min values
-		if((electricityRatioBattery.value + num) > electricityRatioCap.value) {
-			change = electricityRatioCap.value - electricityRatioBattery.value;
+		if((electricityRatioBattery.value + num) > electricityChoiceCap.value) {
+			change = electricityChoiceCap.value - electricityRatioBattery.value;
 		} else if((electricityRatioBattery.value + num) < 0) {
 			change = -electricityRatioBattery.value;
 		} else {
 			change = num;
 		}
 
+
 		//check against available idle electricity
-		if(-change + electricityRatioIdle.value > electricityRatioCap.value) {
-			change = electricityRatioCap.value - electricityRatioIdle.value;
+		if(-change + electricityRatioIdle.value > electricityIdleCap.value) {
+			change = electricityChoiceCap.value - electricityRatioIdle.value;
 		}
 		if(-change + electricityRatioIdle.value < 0) {
 			change = -electricityRatioIdle.value;
@@ -127,9 +128,9 @@ function genEleBat(num) {
 		electricityRatioIdle.value -= change;
 
 		ResourceScreenUpdate(electricityRatioIdle, "electricityIdle");
-		ResourceCapScreenUpdate(electricityRatioCap, "electricityIdle");
+		ResourceCapScreenUpdate(electricityIdleCap, "electricityIdle");
 		ResourceScreenUpdate(electricityRatioBattery, "electricityBattery");
-		ResourceCapScreenUpdate(electricityRatioCap, "electricityBattery");
+		ResourceCapScreenUpdate(electricityChoiceCap, "electricityBattery");
 	}
 }
 
@@ -139,8 +140,8 @@ function genElePos(num) {
 	//not enough positivity
 	if(dynamoUnlocked == 1) {
 		//check against max/min values
-		if((electricityRatioPosGen.value + num) > electricityRatioCap.value) {
-			change = electricityRatioCap.value - electricityRatioPosGen.value;
+		if((electricityRatioPosGen.value + num) > electricityChoiceCap.value) {
+			change = electricityChoiceCap.value - electricityRatioPosGen.value;
 		} else if((electricityRatioPosGen.value + num) < 0) {
 			change = -electricityRatioPosGen.value;
 		} else {
@@ -148,8 +149,8 @@ function genElePos(num) {
 		}
 
 		//check against available idle electricity
-		if(-change + electricityRatioIdle.value > electricityRatioCap.value) {
-			change = electricityRatioCap.value - electricityRatioIdle.value;
+		if(-change + electricityRatioIdle.value > electricityIdleCap.value) {
+			change = electricityChoiceCap.value - electricityRatioIdle.value;
 		}
 		if(-change + electricityRatioIdle.value < 0) {
 			change = -electricityRatioIdle.value;
@@ -160,8 +161,42 @@ function genElePos(num) {
 		electricityRatioIdle.value -= change;
 
 		ResourceScreenUpdate(electricityRatioIdle, "electricityIdle");
-		ResourceCapScreenUpdate(electricityRatioCap, "electricityIdle");
+		ResourceCapScreenUpdate(electricityIdleCap, "electricityIdle");
 		ResourceScreenUpdate(electricityRatioPosGen, "electricityPosGen");
-		ResourceCapScreenUpdate(electricityRatioCap, "electricityPosGen");
+		ResourceCapScreenUpdate(electricityChoiceCap, "electricityPosGen");
+	}
+}
+
+function genEleMult(num) {
+	var change = 0;
+
+	//not enough positivity
+	if(dynamoUnlocked == 1) {
+		//check against max/min values
+		if((electricityRatioMult.value + num) > electricityChoiceCap.value) {
+			change = electricityChoiceCap.value - electricityRatioMult.value;
+		} else if((electricityRatioMult.value + num) < 0) {
+			change = -electricityRatioMult.value;
+		} else {
+			change = num;
+		}
+
+
+		//check against available idle electricity
+		if(-change + electricityRatioIdle.value > electricityIdleCap.value) {
+			change = electricityChoiceCap.value - electricityRatioIdle.value;
+		}
+		if(-change + electricityRatioIdle.value < 0) {
+			change = -electricityRatioIdle.value;
+		}
+	
+		
+		electricityRatioMult.value += change;
+		electricityRatioIdle.value -= change;
+
+		ResourceScreenUpdate(electricityRatioIdle, "electricityIdle");
+		ResourceCapScreenUpdate(electricityIdleCap, "electricityIdle");
+		ResourceScreenUpdate(electricityRatioMult, "electricityMult");
+		ResourceCapScreenUpdate(electricityChoiceCap, "electricityMult");
 	}
 }

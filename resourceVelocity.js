@@ -15,6 +15,12 @@ function updateVelocity(){
 
 	//base positivity value
 	var basePositivityVelocity = positivityGen.value;
+	//multiply by gens
+	if(dynamoUnlocked == 1) {
+		if(electricityRatioMult.value == 1) {
+			basePositivityVelocity *= 10;
+		}
+	}
 
 	//reduce positivity by negativity %
 	var negativePositivityVelocity = -(negativity.value / 100.0) * positivityCap.value;
@@ -75,16 +81,21 @@ function updateVelocity(){
 		electricityVelocity.value = Math.round(electricityVelocity.value * 10) / 10;
 
 		//update electricitycap
-		electricityCap.value = positivityCap.value * (electricityRatioBattery.value / 100);
+		electricityCap.value = positivityCap.value * electricityRatioBattery.value;
 
 		//find available charge
 		var availableCharge = (electricity.value + electricityVelocity.value) - electricityCap.value
 		//check for battery
 		if(availableCharge > 0) {
-		//drain for pos
-			electricityPositivityVelocity = availableCharge * (electricityRatioPosGen.value / 100)
+			
+			//pos gen
+			electricityPositivityVelocity = availableCharge * (electricityRatioPosGen.value)
 			electricityPositivityVelocity = Math.round(electricityPositivityVelocity * 10) / 10;
-			positivityVelocity.value += electricityPositivityVelocity;
+			var positiveElectricity = electricityPositivityVelocity;
+
+
+
+			positivityVelocity.value += positiveElectricity;
 
 
 			//Drain to battery cap

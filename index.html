@@ -87,15 +87,19 @@
    </div>
 
    <div class="resource" id="electricityIdle">
-    IdleRatio:<span  class="number-display">0</span>
+    Idle Dynamos:<span  class="number-display">0</span>
     <br>
    </div>
    <div class="resource" id="electricityBattery">
-    BatteryRatio:<span  class="number-display">0</span>
+    Battery Dynamo:<span  class="number-display">0</span>
     <br>
    </div>
    <div class="resource" id="electricityPosGen">
-    PositiveRatio:<span  class="number-display">0</span>
+    Positivity Dynamo:<span  class="number-display">0</span>
+    <br>
+   </div>
+   <div class="resource" id="electricityMult">
+    10x Generator Dynamo:<span  class="number-display">0</span>
     <br>
    </div>
   </div>
@@ -118,17 +122,24 @@
     Inc. Pressure Rate
    </button>
    <br>
-   <button id="decBat" type="button" onClick="genEleBat(-10)">
+   <button id="decBat" type="button" onClick="genEleBat(-1)">
     Dec. Battery
    </button>
-   <button id="incBat" type="button" onClick="genEleBat(10)">
+   <button id="incBat" type="button" onClick="genEleBat(1)">
     Inc. Battery
    </button>
-   <button id="decElePos" type="button" onClick="genElePos(-10)">
+   <button id="decElePos" type="button" onClick="genElePos(-1)">
     Dec. Dynamo
    </button>
-   <button id="incElePos" type="button" onClick="genElePos(10)">
+   <button id="incElePos" type="button" onClick="genElePos(1)">
     Inc. Dynamo
+   </button>
+   <br>
+   <button id="decMult" type="button" onClick="genEleMult(-1)">
+    Dec. Mult
+   </button>
+   <button id="incMult" type="button" onClick="genEleMult(1)">
+    Inc. Mult
    </button>
   </div>
   <div id="passiveColumn">

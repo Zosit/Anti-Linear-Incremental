@@ -49,6 +49,8 @@ function researchDynamo() {
 		revealHTML("incBat");
 		revealHTML("decElePos");
 		revealHTML("incElePos");
+		revealHTML("decMult");
+		revealHTML("incMult");
 		hideHTML("resEle");
 	//}
 }
