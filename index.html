@@ -87,19 +87,24 @@
    </div>
 
    <div class="resource" id="electricityIdle">
-    Idle Dynamos:<span  class="number-display">0</span>
+    Idle Motors:<span  class="number-display">0</span>
     <br>
    </div>
    <div class="resource" id="electricityBattery">
-    Battery Dynamo:<span  class="number-display">0</span>
+    Battery Motor:<span  class="number-display">0</span>
     <br>
    </div>
    <div class="resource" id="electricityPosGen">
-    Positivity Dynamo:<span  class="number-display">0</span>
+    Positivity Motor:<span  class="number-display">0</span>
     <br>
    </div>
    <div class="resource" id="electricityMult">
-    10x Generator Dynamo:<span  class="number-display">0</span>
+    10x Generator Motor:<span  class="number-display">0</span>
+    <br>
+   </div>
+
+   <div class="resource" id="alloy">
+    Alloy:<span  class="number-display">0</span>
     <br>
    </div>
   </div>
@@ -141,10 +146,14 @@
    <button id="incMult" type="button" onClick="genEleMult(1)">
     Inc. Mult
    </button>
+   <br>
+   <button id="craftAlloy" type="button" onClick="genAlloy()">
+    Craft Alloy
+   </button>
   </div>
   <div id="passiveColumn">
    <button class="purchase" id="buyPositivityGenerator" type="button" onClick="buyPosGen(1)">
-    Build Positivity Generator: <span class="number-display">10</span>
+    Build Positivity Generator: <span class="number-display">2</span>
     <div class="resource-dropdown">
      <div id="PosGenBuyInfo">
       Base Cost: <span class="number-display">2</span><br>
@@ -164,6 +173,9 @@
   </button>
   <button id="resEle" type="button" onClick="researchDynamo()">
    Unlock Electricity: 1000 pos, 1000 pre, 5% Neg
+  </button>
+  <button id="resAlloy" type="button" onClick="researchAlloy()">
+   Unlock Alloy: 1000 pos, 1000 pre, 5% Neg
   </button>
  </div>
 

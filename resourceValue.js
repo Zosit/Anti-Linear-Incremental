@@ -200,3 +200,21 @@ function genEleMult(num) {
 		ResourceCapScreenUpdate(electricityChoiceCap, "electricityMult");
 	}
 }
+
+function genAlloy() {
+	var oldVal = positivity.value;
+	genPos(-positivity.value);
+
+	alloy.value += oldVal * (negativity.value / 100);
+	alloy.value = Math.round(alloy.value * 10) / 10;
+
+	if(alloy.value < 0) {
+		alloy.value = 0;
+	}
+	if(alloy.value > alloyCap.value) {
+		alloy.value = alloyCap.value;
+	}
+	ResourceScreenUpdate(alloy, "alloy");
+	ResourceCapScreenUpdate(alloyCap, "alloy");
+}
+

@@ -108,6 +108,10 @@
 	display:none;
 }
 
+#alloy {
+	display:none;
+}
+
 
 #decNeg {
 	display:none;
@@ -146,6 +150,10 @@
 }
 
 #incElePos {
+	display:none;
+}
+
+#craftAlloy {
 	display:none;
 }
 

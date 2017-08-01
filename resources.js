@@ -38,3 +38,7 @@ var electricityRatioMult = new resource(0);
 var electricityChoiceCap = new resource(1);
 var electricityIdleCap = new resource(2);
 var electricityCap = new resource(0);
+
+var alloyUnlocked = 0;
+var alloy = new resource(0);
+var alloyCap = new resource(10);

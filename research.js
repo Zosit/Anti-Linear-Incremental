@@ -8,6 +8,7 @@
 function boostCaps() {
 		positivityCap.value *= 10;
 		pressureCap.value *= 10;
+		alloyCap.value *= 10;
 }
 
 //research functions
@@ -55,12 +56,14 @@ function researchDynamo() {
 	//}
 }
 
-function researchMarket() {
-	if(positivity.value >= 10000 && pressure.value >= 10000 && negativity.value >= 10) {
+function researchAlloy() {
+	//if(positivity.value >= 10000 && pressure.value >= 10000 && electricity.value >= 10000 && negativity.value >= 10) {
 		ClearAllResources();
 		boostCaps();
 		negativityCap.value = 15;
 
-		marketUnlocked = 1;
-	}
+		alloyUnlocked = 1;
+		revealHTML("craftAlloy");
+		hideHTML("resAlloy");
+	//}
 }
