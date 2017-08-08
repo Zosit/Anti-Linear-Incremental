@@ -4,7 +4,7 @@
 
 
 
-//MetaResource Updates
+//Velocity calculations for a game tick
 function updateVelocity(){
 
 
@@ -15,7 +15,7 @@ function updateVelocity(){
 
 	//base positivity value
 	var basePositivityVelocity = positivityGen.value;
-	//multiply by gens
+	//multiply by multiplication dynamos
 	if(dynamoUnlocked == 1) {
 		if(electricityRatioMult.value == 1) {
 			basePositivityVelocity *= 10;

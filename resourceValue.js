@@ -8,7 +8,7 @@
 
 
 
-//Resource Generation
+//Emptys all resources to their default state
 function ClearAllResources() {
 	genPos(-positivity.value);
 	genPosGen(-positivityGen.value);
@@ -17,6 +17,11 @@ function ClearAllResources() {
 	genPreGen(-pressureGen.value);
 }
 
+//------------------------------------------------------------------
+//Resource Generation
+//------------------------------------------------------------------
+
+//Positivity
 function genPos(num) {
 	var oldVal = positivity.value;
 	positivity.value += num;
@@ -30,11 +35,13 @@ function genPos(num) {
 	ResourceCapScreenUpdate(positivityCap, "positivity");
 }
 
+//Positivity generators
 function genPosGen(num) {
 	positivityGen.value += num;
 	ResourceScreenUpdate(positivityGen, "positivityGenerator");
 }
 
+//Negativity
 function genNeg(num) {
 	if(negativityUnlocked == 1) {
 
@@ -55,6 +62,7 @@ function genNeg(num) {
 	}
 }
 
+//Pressure
 function genPre(num) {
 
 	//not enough positivity
@@ -74,7 +82,7 @@ function genPre(num) {
 	}
 }
 
-
+//Pressure Generators
 function genPreGen(num) {
 	pressureGen.value += num;
 	if(pressureGen.value <= 0) {
@@ -86,7 +94,7 @@ function genPreGen(num) {
 	}*/
 }
 
-
+//Electricity
 function genEle(num) {
 
 	//not enough positivity
@@ -99,6 +107,7 @@ function genEle(num) {
 	}
 }
 
+//Battery Dynamos
 function genEleBat(num) {
 	var change = 0;
 
@@ -133,6 +142,7 @@ function genEleBat(num) {
 	}
 }
 
+//Positivity Dynamos
 function genElePos(num) {
 	var change = 0;
 
@@ -166,6 +176,7 @@ function genElePos(num) {
 	}
 }
 
+//Multiplication Dynamos
 function genEleMult(num) {
 	var change = 0;
 
@@ -200,6 +211,7 @@ function genEleMult(num) {
 	}
 }
 
+//Alloys
 function genAlloy() {
 	var oldVal = positivity.value;
 	genPos(-positivity.value);

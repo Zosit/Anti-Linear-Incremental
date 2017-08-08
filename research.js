@@ -4,14 +4,16 @@
 
 
 
-
+//Raises the caps of all resources that are main resources by a factor of 10
 function boostCaps() {
 		positivityCap.value *= 10;
 		pressureCap.value *= 10;
 		alloyCap.value *= 10;
 }
 
+//-------------------------------------------------------------------------
 //research functions
+//-------------------------------------------------------------------------
 function researchNegativity() {
 	//if(positivity.value >= 10) {
 		ClearAllResources();

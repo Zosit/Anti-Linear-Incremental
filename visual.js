@@ -10,7 +10,7 @@ $(document).ready(function () {
   });
 });
 
-//Generic Resource Management Functions
+//If a resource has been modified, reveal it
 function ResourceTestForReveal(targetId, targetValue) {
 	var element = document.getElementById(targetId);
 
@@ -25,6 +25,7 @@ function ResourceTestForReveal(targetId, targetValue) {
 	}
 }
 
+//Reveal a target that is modifying a resource
 function VelocityReveal(targetId) {
 	var element = document.getElementById(targetId);
 
@@ -38,6 +39,7 @@ function VelocityReveal(targetId) {
 	}	
 }
 
+//Hide a target that is no longer modifying a resource
 function VelocityHide(targetId) {
 	var element = document.getElementById(targetId);
 
@@ -51,6 +53,7 @@ function VelocityHide(targetId) {
 	}	
 }
 
+//Updates a resource on the display
 function ResourceScreenUpdate (targetValue, targetId) {
 	var element = document.getElementById(targetId);
 
@@ -59,6 +62,7 @@ function ResourceScreenUpdate (targetValue, targetId) {
 	element.childNodes[1].innerHTML = targetValue.value;
 }
 
+//Updates the dropdown for a resource on the display (out of date?)
 function ResourceDropdownUpdate (targetValue, targetId) {
 	var element = document.getElementById(targetId);
 
@@ -67,6 +71,7 @@ function ResourceDropdownUpdate (targetValue, targetId) {
 	element.childNodes[3].childNodes[1].innerHTML = targetValue.value;
 }
 
+//Updates the positivity dropdown on the display
 function ResourceDropdownPositivityUpdate (base, negative, limit1, pressure, electricity, limit2, targetId) {
 	var element = document.getElementById(targetId);
 
@@ -108,6 +113,7 @@ function ResourceDropdownPositivityUpdate (base, negative, limit1, pressure, ele
 	}
 }
 
+//Updates the pressure dropdown on the display
 function ResourceDropdownPressureUpdate (basePercent, actual, preLimit, negBoost, targetId) {
 	var element = document.getElementById(targetId);
 
@@ -137,6 +143,7 @@ function ResourceDropdownPressureUpdate (basePercent, actual, preLimit, negBoost
 	}
 }
 
+//Updates the electricity dropdown on the display
 function ResourceDropdownElectricityUpdate (positivity, pressure, eleLimit, targetId) {
 	var element = document.getElementById(targetId);
 
@@ -160,6 +167,7 @@ function ResourceDropdownElectricityUpdate (positivity, pressure, eleLimit, targ
 	}
 }
 
+//Updates the capacity value for a resource on the display
 function ResourceCapScreenUpdate (targetValue, targetId) {
 	var element = document.getElementById(targetId);
 
@@ -167,7 +175,7 @@ function ResourceCapScreenUpdate (targetValue, targetId) {
 }
 
 
-//Tabs
+//Tabs switching function (out of date?)
 function switchToTab(targetId) {
 	var element = document.getElementById(targetId);
 
@@ -185,11 +193,12 @@ function switchToTab(targetId) {
 }
 
 
-//Unlock target
+//Reveal target
 function revealHTML(targetId) {
 	document.getElementById(targetId).style.display = "inline";
 }
 
+//Hide target
 function hideHTML(targetId) {
 	document.getElementById(targetId).style.display = "none";
 }

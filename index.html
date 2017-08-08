@@ -3,7 +3,10 @@
 <html>
 <head>
 
+ <!-- File including the initial states for this file -->
  <link rel="stylesheet" type="text/css" href="interface.css" />
+
+ <!-- Bootstrap/jquery includes -->
  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
@@ -11,191 +14,214 @@
 
 </head>
 <body>
+
+ <!-- Navigation tabs for game window -->
  <ul class="nav nav-tabs">
   <li class="active"><a data-toggle="tab" href="#resources">Resources</a></li>
   <li><a data-toggle="tab" href="#research">Research</a></li>
  </ul>
+
+ <!-- Navigation tabs for game window -->
  <div class="tab-content">
+
+  <!-- Tabs containing information on available resources and methods for the player to interact with them -->
   <div id="resources" class="tab-pane fade in active">
- <div id="resourcePage">
-  <div id="resourceColumn" >
-   <div class="resource" id="positivity">
-    Positivity: <span class="number-display">0</span>
-    <div class="resource-dropdown">
-     <div id="basePositivityVelocity">
-      Gen: <span class="number-display">0</span><br>
+
+   <!-- Left panel for displaying the players resource counts -->
+   <div id="resourcePage">
+    <div id="resourceColumn" >
+
+     <div class="resource" id="positivity">
+      Positivity: <span class="number-display">0</span>
+      <div class="resource-dropdown">
+       <div id="basePositivityVelocity">
+        Gen: <span class="number-display">0</span><br>
+       </div>
+       <div id="negativePositivityVelocity">
+        Negativity: <span class="number-display">0</span><br>
+       </div>
+       <div id="positivityVelocityLimit">
+        Base Sum: <span class="number-display">0</span><br>
+       </div>
+       <div id="pressurePositivityVelocity">
+        Pressure: <span class="number-display">0</span><br>
+       </div>
+       <div id="electricityPositivityVelocity">
+        Electricity: <span class="number-display">0</span><br>
+       </div>
+       <div id="positivityVelocityLimit2">
+        Post Sum: <span class="number-display">0</span>
+       </div>
+      </div>
+      <br>
      </div>
-     <div id="negativePositivityVelocity">
-      Negativity: <span class="number-display">0</span><br>
+
+     <div class="resource" id="positivityGenerator">
+      Positivity Generators:<span  class="number-display">0</span>
+      <br>
      </div>
-     <div id="positivityVelocityLimit">
-      Base Sum: <span class="number-display">0</span><br>
+
+     <div class="resource" id="negativity">
+      Negativity:<span  class="number-display">0</span><span  float="right">%</span>
+      <br>
      </div>
-     <div id="pressurePositivityVelocity">
-      Pressure: <span class="number-display">0</span><br>
+  
+     <div class="resource" id="pressure">
+      Pressure:<span  class="number-display">0</span>
+      <div class="resource-dropdown">
+       <div id="basePressureVelocityPercent">
+        Percentage: <span class="number-display">0</span><br>
+       </div>
+       <div id="basePressureVelocity">
+        Actual: <span class="number-display">0</span><br>
+       </div>
+       <div id="pressureVelocityLimit">
+        Base Sum: <span class="number-display">0</span><br>
+       </div>
+       <div id="negativePressureVelocity">
+        Negativity: <span class="number-display">0</span><br>
+       </div>
+      </div>
+      <br>
      </div>
-     <div id="electricityPositivityVelocity">
-      Electricity: <span class="number-display">0</span><br>
+
+     <div class="resource" id="electricity">
+      electricity:<span  class="number-display">0</span>
+      <div class="resource-dropdown">
+       <div id="elePositivityVelocity">
+        Positivity: <span class="number-display">0</span><br>
+       </div>
+       <div id="elePressureVelocity">
+        Pressure: <span class="number-display">0</span><br>
+       </div>
+       <div id="eleLimit">
+        Base Sum: <span class="number-display">0</span><br>
+       </div>
+      </div>
+      <br>
      </div>
-     <div id="positivityVelocityLimit2">
-      Post Sum: <span class="number-display">0</span>
+
+     <div class="resource" id="electricityIdle">
+      Idle Motors:<span  class="number-display">0</span>
+      <br>
      </div>
+
+     <div class="resource" id="electricityBattery">
+      Battery Motor:<span  class="number-display">0</span>
+      <br>
+     </div>
+
+     <div class="resource" id="electricityPosGen">
+      Positivity Motor:<span  class="number-display">0</span>
+      <br>
+     </div>
+
+     <div class="resource" id="electricityMult">
+      10x Generator Motor:<span  class="number-display">0</span>
+      <br>
+     </div>
+
+     <div class="resource" id="alloy">
+      Alloy:<span  class="number-display">0</span>
+      <br>
+     </div>
+
     </div>
-    <br>
-   </div>
 
+    <!-- Middle panel for displaying the available buttons for actively influencing the game -->
+    <div id="activeColumn">
+     <button type="button" class="btn btn-default" onClick="genPos(1)">
+      Generate Positivity
+     </button>
+     <br>
 
-
-   <div class="resource" id="positivityGenerator">
-    Positivity Generators:<span  class="number-display">0</span>
-    <br>
-   </div>
-
-
-   <div class="resource" id="negativity">
-    Negativity:<span  class="number-display">0</span><span  float="right">%</span>
-    <br>
-   </div>
-
-   <div class="resource" id="pressure">
-    Pressure:<span  class="number-display">0</span>
-    <div class="resource-dropdown">
-     <div id="basePressureVelocityPercent">
-      Percentage: <span class="number-display">0</span><br>
+     <div class="btn-group">
+      <button id="decNeg" type="button" class="btn btn-default" onClick="genNeg(-1)">
+       Decrease Negativity
+      </button>
+      <button id="incNeg" type="button" class="btn btn-default" onClick="genNeg(1)">
+       Increase Negativity
+      </button>
      </div>
-     <div id="basePressureVelocity">
-      Actual: <span class="number-display">0</span><br>
+     <br>
+
+     <div class="btn-group">
+      <button id="decPre" type="button" class="btn btn-default" onClick="genPreGen(-1)">
+       Dec. Pressure Rate
+      </button>
+      <button id="incPre" type="button" class="btn btn-default" onClick="genPreGen(1)">
+       Inc. Pressure Rate
+      </button>
      </div>
-     <div id="pressureVelocityLimit">
-      Base Sum: <span class="number-display">0</span><br>
+     <br>
+
+     <div class="btn-group">
+      <button id="decBat" type="button" class="btn btn-default" onClick="genEleBat(-1)">
+       Dec. Battery
+      </button>
+      <button id="incBat" type="button" class="btn btn-default" onClick="genEleBat(1)">
+       Inc. Battery
+      </button>
      </div>
-     <div id="negativePressureVelocity">
-      Negativity: <span class="number-display">0</span><br>
+     <div class="btn-group">
+      <button id="decElePos" type="button" class="btn btn-default" onClick="genElePos(-1)">
+       Dec. Dynamo
+      </button>
+      <button id="incElePos" type="button" class="btn btn-default" onClick="genElePos(1)">
+       Inc. Dynamo
+      </button>
      </div>
+     <br>
+
+     <div class="btn-group">
+      <button id="decMult" type="button" class="btn btn-default" onClick="genEleMult(-1)">
+       Dec. Mult
+      </button>
+      <button id="incMult" type="button" class="btn btn-default" onClick="genEleMult(1)">
+       Inc. Mult
+      </button>
+     </div>
+     <br>
+
+     <button id="craftAlloy" type="button" class="btn btn-default" onClick="genAlloy()">
+      Craft Alloy
+     </button>
+     <br>
+
     </div>
-    <br>
-   </div>
 
-   <div class="resource" id="electricity">
-    electricity:<span  class="number-display">0</span>
-    <div class="resource-dropdown">
-     <div id="elePositivityVelocity">
-      Positivity: <span class="number-display">0</span><br>
-     </div>
-     <div id="elePressureVelocity">
-      Pressure: <span class="number-display">0</span><br>
-     </div>
-     <div id="eleLimit">
-      Base Sum: <span class="number-display">0</span><br>
-     </div>
+    <!-- Right panel for displaying the available buttons for changing the passive influence on the game -->
+    <div id="passiveColumn">
+     <button class="purchase btn btn-default" id="buyPositivityGenerator" type="button" onClick="buyPosGen(1)">
+      Build Positivity Generator: <span>2</span>
+      <div class="resource-dropdown">
+       <div id="PosGenBuyInfo">
+        Base Cost: <span class="number-display">2</span><br>
+        Price Ratio: <span class="number-display">1.05</span><br>
+       </div>
+      </div>
+     </button>
+
     </div>
-    <br>
-   </div>
-
-   <div class="resource" id="electricityIdle">
-    Idle Motors:<span  class="number-display">0</span>
-    <br>
-   </div>
-   <div class="resource" id="electricityBattery">
-    Battery Motor:<span  class="number-display">0</span>
-    <br>
-   </div>
-   <div class="resource" id="electricityPosGen">
-    Positivity Motor:<span  class="number-display">0</span>
-    <br>
-   </div>
-   <div class="resource" id="electricityMult">
-    10x Generator Motor:<span  class="number-display">0</span>
-    <br>
-   </div>
-
-   <div class="resource" id="alloy">
-    Alloy:<span  class="number-display">0</span>
-    <br>
    </div>
   </div>
 
-  <div id="activeColumn">
-   <button type="button" class="btn btn-default" onClick="genPos(1)">
-    Generate Positivity
-   </button>
-   <br>
-   <div class="btn-group">
-    <button id="decNeg" type="button" class="btn btn-default" onClick="genNeg(-1)">
-     Decrease Negativity
-    </button>
-    <button id="incNeg" type="button" class="btn btn-default" onClick="genNeg(1)">
-     Increase Negativity
-    </button>
-   </div>
-   <div class="btn-group">
-    <button id="decPre" type="button" class="btn btn-default" onClick="genPreGen(-1)">
-     Dec. Pressure Rate
-    </button>
-    <button id="incPre" type="button" class="btn btn-default" onClick="genPreGen(1)">
-     Inc. Pressure Rate
-    </button>
-   </div>
-   <br>
-   <div class="btn-group">
-    <button id="decBat" type="button" class="btn btn-default" onClick="genEleBat(-1)">
-     Dec. Battery
-    </button>
-    <button id="incBat" type="button" class="btn btn-default" onClick="genEleBat(1)">
-     Inc. Battery
-    </button>
-   </div>
-   <div class="btn-group">
-    <button id="decElePos" type="button" class="btn btn-default" onClick="genElePos(-1)">
-     Dec. Dynamo
-    </button>
-    <button id="incElePos" type="button" class="btn btn-default" onClick="genElePos(1)">
-     Inc. Dynamo
-    </button>
-   </div>
-   <br>
-   <div class="btn-group">
-    <button id="decMult" type="button" class="btn btn-default" onClick="genEleMult(-1)">
-     Dec. Mult
-    </button>
-    <button id="incMult" type="button" class="btn btn-default" onClick="genEleMult(1)">
-     Inc. Mult
-    </button>
-   </div>
-   <br>
-   <button id="craftAlloy" type="button" class="btn btn-default" onClick="genAlloy()">
-    Craft Alloy
-   </button>
-  </div>
-  <div id="passiveColumn">
-   <button class="purchase btn btn-default" id="buyPositivityGenerator" type="button" onClick="buyPosGen(1)">
-    Build Positivity Generator: <span>2</span>
-    <div class="resource-dropdown">
-     <div id="PosGenBuyInfo">
-      Base Cost: <span class="number-display">2</span><br>
-      Price Ratio: <span class="number-display">1.05</span><br>
-     </div>
-    </div>
-   </button>
-
-  </div>
- </div>
-  </div>
+  <!-- Tab containing information on available unlocks and methods for the player to interact with them -->
   <div id="research" class="tab-pane fade">
- <div id="researchPage">
-  <button id="resNeg" type="button" class="btn btn-primary" onClick="researchNegativity()">
-   Unlock Negativity: 10 pos
-  </button>
-  <button id="resPre" type="button" class="btn btn-primary" onClick="researchPressure()">
-   Unlock Pressure: 100 pos, 1% Neg
-  </button>
-  <button id="resEle" type="button" class="btn btn-primary" onClick="researchDynamo()">
-   Unlock Electricity: 1000 pos, 1000 pre, 5% Neg
-  </button>
-  <button id="resAlloy" type="button" class="btn btn-primary" onClick="researchAlloy()">
-   Unlock Alloy: 1000 pos, 1000 pre, 5% Neg
-  </button>
- </div>
+   <div id="researchPage">
+    <button id="resNeg" type="button" class="btn btn-primary" onClick="researchNegativity()">
+     Unlock Negativity: 10 pos
+    </button>
+    <button id="resPre" type="button" class="btn btn-primary" onClick="researchPressure()">
+     Unlock Pressure: 100 pos, 1% Neg
+    </button>
+    <button id="resEle" type="button" class="btn btn-primary" onClick="researchDynamo()">
+     Unlock Electricity: 1000 pos, 1000 pre, 5% Neg
+    </button>
+    <button id="resAlloy" type="button" class="btn btn-primary" onClick="researchAlloy()">
+     Unlock Alloy: 10000 pos, 10000 pre, 10000 ele, 10% Neg
+    </button>
+   </div>
   </div>
  </div>
 
