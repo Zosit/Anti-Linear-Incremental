@@ -33,7 +33,6 @@ function genPos(num) {
 function genPosGen(num) {
 	positivityGen.value += num;
 	ResourceScreenUpdate(positivityGen, "positivityGenerator");
-	posGenCostUpdate();
 }
 
 function genNeg(num) {

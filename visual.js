@@ -2,7 +2,13 @@
  *	This file is available under the GNU license. See the LICENSE file in the root directory for details.
  */
 
-
+//Prevents Bootstrap buttons from staying focused on click
+$(document).ready(function () {
+  $(".btn").click(function(event) {
+    // Removes focus of the button.
+    $(this).blur();
+  });
+});
 
 //Generic Resource Management Functions
 function ResourceTestForReveal(targetId, targetValue) {
@@ -16,7 +22,7 @@ function ResourceTestForReveal(targetId, targetValue) {
 	if(style == "none" && (targetValue.value != targetValue.initialValue)) {
 		element.style.display = "inline";
 		element.childNodes[1].style.float = "right";
-	}	
+	}
 }
 
 function VelocityReveal(targetId) {
@@ -162,7 +168,7 @@ function ResourceCapScreenUpdate (targetValue, targetId) {
 
 
 //Tabs
-function switchToTab(targetId){
+function switchToTab(targetId) {
 	var element = document.getElementById(targetId);
 
 	if(element.currentStyle) {

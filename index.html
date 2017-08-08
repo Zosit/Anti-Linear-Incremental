@@ -4,13 +4,19 @@
 <head>
 
  <link rel="stylesheet" type="text/css" href="interface.css" />
+ <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+ <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
 
 </head>
 <body>
- <div id="tabs">
-  <button id="resourceTab" type="button" onClick="switchToTab('resourcePage')">Resources</button>
-  <button id="researchTab" type="button" onClick="switchToTab('researchPage')">Research</button>
- </div>
+ <ul class="nav nav-tabs">
+  <li class="active"><a data-toggle="tab" href="#resources">Resources</a></li>
+  <li><a data-toggle="tab" href="#research">Research</a></li>
+ </ul>
+ <div class="tab-content">
+  <div id="resources" class="tab-pane fade in active">
  <div id="resourcePage">
   <div id="resourceColumn" >
    <div class="resource" id="positivity">
@@ -110,50 +116,60 @@
   </div>
 
   <div id="activeColumn">
-   <button type="button" onClick="genPos(1)">
+   <button type="button" class="btn btn-default" onClick="genPos(1)">
     Generate Positivity
    </button>
    <br>
-   <button id="decNeg" type="button" onClick="genNeg(-1)">
-    Decrease Negativity
-   </button>
-   <button id="incNeg" type="button" onClick="genNeg(1)">
-    Increase Negativity
-   </button>
-   <button id="decPre" type="button" onClick="genPreGen(-1)">
-    Dec. Pressure Rate
-   </button>
-   <button id="incPre" type="button" onClick="genPreGen(1)">
-    Inc. Pressure Rate
-   </button>
+   <div class="btn-group">
+    <button id="decNeg" type="button" class="btn btn-default" onClick="genNeg(-1)">
+     Decrease Negativity
+    </button>
+    <button id="incNeg" type="button" class="btn btn-default" onClick="genNeg(1)">
+     Increase Negativity
+    </button>
+   </div>
+   <div class="btn-group">
+    <button id="decPre" type="button" class="btn btn-default" onClick="genPreGen(-1)">
+     Dec. Pressure Rate
+    </button>
+    <button id="incPre" type="button" class="btn btn-default" onClick="genPreGen(1)">
+     Inc. Pressure Rate
+    </button>
+   </div>
    <br>
-   <button id="decBat" type="button" onClick="genEleBat(-1)">
-    Dec. Battery
-   </button>
-   <button id="incBat" type="button" onClick="genEleBat(1)">
-    Inc. Battery
-   </button>
-   <button id="decElePos" type="button" onClick="genElePos(-1)">
-    Dec. Dynamo
-   </button>
-   <button id="incElePos" type="button" onClick="genElePos(1)">
-    Inc. Dynamo
-   </button>
+   <div class="btn-group">
+    <button id="decBat" type="button" class="btn btn-default" onClick="genEleBat(-1)">
+     Dec. Battery
+    </button>
+    <button id="incBat" type="button" class="btn btn-default" onClick="genEleBat(1)">
+     Inc. Battery
+    </button>
+   </div>
+   <div class="btn-group">
+    <button id="decElePos" type="button" class="btn btn-default" onClick="genElePos(-1)">
+     Dec. Dynamo
+    </button>
+    <button id="incElePos" type="button" class="btn btn-default" onClick="genElePos(1)">
+     Inc. Dynamo
+    </button>
+   </div>
    <br>
-   <button id="decMult" type="button" onClick="genEleMult(-1)">
-    Dec. Mult
-   </button>
-   <button id="incMult" type="button" onClick="genEleMult(1)">
-    Inc. Mult
-   </button>
+   <div class="btn-group">
+    <button id="decMult" type="button" class="btn btn-default" onClick="genEleMult(-1)">
+     Dec. Mult
+    </button>
+    <button id="incMult" type="button" class="btn btn-default" onClick="genEleMult(1)">
+     Inc. Mult
+    </button>
+   </div>
    <br>
-   <button id="craftAlloy" type="button" onClick="genAlloy()">
+   <button id="craftAlloy" type="button" class="btn btn-default" onClick="genAlloy()">
     Craft Alloy
    </button>
   </div>
   <div id="passiveColumn">
-   <button class="purchase" id="buyPositivityGenerator" type="button" onClick="buyPosGen(1)">
-    Build Positivity Generator: <span class="number-display">2</span>
+   <button class="purchase btn btn-default" id="buyPositivityGenerator" type="button" onClick="buyPosGen(1)">
+    Build Positivity Generator: <span>2</span>
     <div class="resource-dropdown">
      <div id="PosGenBuyInfo">
       Base Cost: <span class="number-display">2</span><br>
@@ -164,20 +180,31 @@
 
   </div>
  </div>
+  </div>
+  <div id="research" class="tab-pane fade">
  <div id="researchPage">
-  <button id="resNeg" type="button" onClick="researchNegativity()">
+  <button id="resNeg" type="button" class="btn btn-primary" onClick="researchNegativity()">
    Unlock Negativity: 10 pos
   </button>
-  <button id="resPre" type="button" onClick="researchPressure()">
+  <button id="resPre" type="button" class="btn btn-primary" onClick="researchPressure()">
    Unlock Pressure: 100 pos, 1% Neg
   </button>
-  <button id="resEle" type="button" onClick="researchDynamo()">
+  <button id="resEle" type="button" class="btn btn-primary" onClick="researchDynamo()">
    Unlock Electricity: 1000 pos, 1000 pre, 5% Neg
   </button>
-  <button id="resAlloy" type="button" onClick="researchAlloy()">
+  <button id="resAlloy" type="button" class="btn btn-primary" onClick="researchAlloy()">
    Unlock Alloy: 1000 pos, 1000 pre, 5% Neg
   </button>
  </div>
+  </div>
+ </div>
+
+
+
+
+
+
+
 
 <script type="text/javascript" src="resources.js"></script>
 <script type="text/javascript" src="visual.js"></script>

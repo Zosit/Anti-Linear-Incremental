@@ -2,6 +2,7 @@
  *	This file is available under the GNU license. See the LICENSE file in the root directory for details.
  */
 
+
 #tabs {
 	width:90.4%;
 	height:50px;
@@ -40,7 +41,6 @@
 
 #researchPage {
 	width:100%;
-	display:none;
 }
 
 

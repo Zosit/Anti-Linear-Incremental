@@ -10,10 +10,11 @@ function buyPosGen(num) {
 		genPos(-positivityGenCost.value);
 		genPosGen(num);
 	}
+	posGenCostUpdate();
 	ResourceScreenUpdate(positivityGenCost, "buyPositivityGenerator");
 }
 
 //Cost Calculations
-function posGenCostUpdate(num) {
+function posGenCostUpdate() {
 	positivityGenCost.value = Math.round(2 * Math.pow(1.05, positivityGen.value));
 }
