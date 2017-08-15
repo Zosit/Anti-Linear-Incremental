@@ -15,7 +15,7 @@ function boostCaps() {
 //research functions
 //-------------------------------------------------------------------------
 function researchNegativity() {
-	//if(positivity.value >= 10) {
+	if(positivity.value >= 10) {
 		ClearAllResources();
 		boostCaps();
 		negativityCap.value = 1;
@@ -24,11 +24,11 @@ function researchNegativity() {
 		revealHTML("decNeg");
 		revealHTML("incNeg");
 		hideHTML("resNeg");
-	//}
+	}
 }
 
 function researchPressure() {
-	//if(positivity.value >= 100 && negativity.value >= 1) {
+	if(positivity.value >= 100 && negativity.value >= 1) {
 		ClearAllResources();
 		boostCaps();
 		negativityCap.value = 5;
@@ -38,11 +38,11 @@ function researchPressure() {
 		revealHTML("decPre");
 		revealHTML("incPre");
 		hideHTML("resPre");
-	//}
+	}
 }
 
 function researchDynamo() {
-	//if(positivity.value >= 1000 && pressure.value >= 1000 && negativity.value >= 5) {
+	if(positivity.value >= 1000 && pressure.value >= 1000 && negativity.value >= 5) {
 		ClearAllResources();
 		boostCaps();
 		negativityCap.value = 10;
@@ -55,11 +55,11 @@ function researchDynamo() {
 		revealHTML("decMult");
 		revealHTML("incMult");
 		hideHTML("resEle");
-	//}
+	}
 }
 
 function researchAlloy() {
-	//if(positivity.value >= 10000 && pressure.value >= 10000 && electricity.value >= 10000 && negativity.value >= 10) {
+	if(positivity.value >= 10000 && pressure.value >= 10000 && electricity.value >= 10000 && negativity.value >= 10) {
 		ClearAllResources();
 		boostCaps();
 		negativityCap.value = 15;
@@ -67,5 +67,5 @@ function researchAlloy() {
 		alloyUnlocked = 1;
 		revealHTML("craftAlloy");
 		hideHTML("resAlloy");
-	//}
+	}
 }
